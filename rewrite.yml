@@ -1,0 +1,34 @@
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.example.RenameProject
+displayName: Rename project
+recipeList:
+- org.openrewrite.java.ChangePackage:
+      oldPackageName: com.example.opinionated
+      newPackageName: foo.bar.demo # <-- change me
+      caseSensitive: true
+- org.openrewrite.text.FindAndReplace:
+      find: OpinionatedSpringBootAppApplication
+      replace: DemoAppApplication # <-- change me
+      caseSensitive: true
+- org.openrewrite.text.FindAndReplace:
+      find: com.example
+      replace: foo.bar # <-- change me
+      caseSensitive: true
+- org.openrewrite.text.FindAndReplace:
+      find: opinionated-spring-boot-app
+      replace: demo # <-- change me
+      caseSensitive: true
+- org.openrewrite.text.FindAndReplace:
+      find: opinionated
+      replace: demo # <-- change me
+      caseSensitive: true
+- org.openrewrite.RenameFile:
+      fileMatcher: '**/OpinionatedSpringBootAppApplication.java'
+      fileName: DemoAppApplication.java # <-- change me
+- org.openrewrite.RenameFile:
+      fileMatcher: '**/TestOpinionatedSpringBootAppApplication.java'
+      fileName: TestDemoAppApplication.java # <-- change me
+- org.openrewrite.java.RemoveUnusedImports
+- org.openrewrite.DeleteSourceFiles:
+        filePattern: rewrite.yml
