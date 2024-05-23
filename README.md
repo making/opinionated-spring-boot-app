@@ -11,3 +11,10 @@ Edit `rewrite.yml`, then
 git add -A
 git clean -fd 
 ```
+
+> [!NOTE]
+> You can check the changes before running the above command by 
+> ```
+> ./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:dryRun -Drewrite.activeRecipes=com.example.RenameProject
+> ```
+> Check `./target/rewrite/rewrite.patch`
