@@ -52,9 +52,9 @@
 			<version>0.4.2</version>
 		</dependency>
 		<dependency>
-			<groupId>co.elastic.logging</groupId>
-			<artifactId>logback-ecs-encoder</artifactId>
-			<version>1.6.0</version>
+			<groupId>am.ik.spring.ecs</groupId>
+			<artifactId>logback-ecs-encoder-autoconfigure</artifactId>
+			<version>0.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>io.micrometer</groupId>
@@ -90,6 +90,10 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -118,6 +122,10 @@
 							<groupId>com.uber.nullaway</groupId>
 							<artifactId>nullaway</artifactId>
 							<version>0.10.26</version>
+						</path>
+						<path>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot-configuration-processor</artifactId>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -174,4 +182,11 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<name>sonatype-snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</repository>
+	</repositories>
 </project>
