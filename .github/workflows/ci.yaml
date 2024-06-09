@@ -36,7 +36,8 @@ jobs:
       run: ./mvnw -V --no-transfer-progress clean test
     - name: Executable Jar
       run: |
-        set -e
+        set -ex
+        apt-get -qq update -y && apt-get -qq install net-tools -y
         ./mvnw -V --no-transfer-progress package -DskipTests
         java -jar target/*.jar &
         .github/workflows/wait.sh
