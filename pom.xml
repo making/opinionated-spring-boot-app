@@ -42,9 +42,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>am.ik.access-logger</groupId>
-			<artifactId>access-logger</artifactId>
-			<version>0.3.2</version>
+			<groupId>am.ik.spring.logbook</groupId>
+			<artifactId>access-logger-logbook</artifactId>
+			<version>0.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>am.ik.spring</groupId>
