@@ -12,7 +12,7 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-		properties = "logging.logback.ecs-encoder.enabled=false")
+		properties = { "logging.logback.ecs-encoder.enabled=false", "logbook.minimum-status=400" })
 public abstract class IntegrationTestBase {
 
 	@Autowired

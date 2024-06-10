@@ -4,11 +4,11 @@ import java.util.UUID;
 
 import am.ik.yavi.arguments.Arguments3Validator;
 import am.ik.yavi.validator.Yavi;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import org.jilt.Builder;
 import org.jilt.BuilderStyle;
 
-public record Todo(UUID id, String title, boolean completed) {
+@Builder(style = BuilderStyle.STAGED, toBuilder = "from")
+public record Todo(UUID id, String title, Boolean completed) {
 
 	private static final Arguments3Validator<UUID, String, Boolean, Todo> validator = Yavi.arguments()
 		.<UUID>_object("id", c -> c.notNull())
@@ -16,10 +16,7 @@ public record Todo(UUID id, String title, boolean completed) {
 		._boolean("completed", c -> c.notNull())
 		.apply(Todo::new);
 
-	@Builder(style = BuilderStyle.STAGED, toBuilder = "from")
-	@JsonCreator
-	public static Todo validated(UUID id, String title, Boolean completed) {
-		return validator.validated(id, title, completed);
+	public Todo {
+		validator.lazy().validated(id, title, completed);
 	}
-
 }
