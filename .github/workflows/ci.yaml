@@ -25,6 +25,27 @@ jobs:
       contents: read
     steps:
     - uses: actions/checkout@v4
+    - name: Set VAULT_ADDR
+      if: secrets.VAULT_ADDR != ''
+      run:
+        export VAULT_ADDR=${{ secrets.VAULT_ADDR }}
+    - name: Import Secrets
+      if: env.VAULT_ADDR != '' && (env.GITHUB_REF == 'refs/heads/develop' || env.GITHUB_REF == 'refs/heads/main')
+      id: secrets
+      uses: hashicorp/vault-action@v3.0.0
+      with:
+        exportToken: true
+        exportEnv: true
+        method: jwt
+        url: ${{ env.VAULT_ADDR }}
+        role: cicd
+        secrets: |
+          kv/data/cicd/sonatype username | SONATYPE_USERNAME ;
+          kv/data/cicd/sonatype password | SONATYPE_PASSWORD ;
+          kv/data/cicd/gpg secring | GPG_SECRING ;
+          kv/data/cicd/gpg passphrase | GPG_PASSPHRASE ;
+          kv/data/cicd/gpg passphrase | GPG_PASSPHRASE ;
+          kv/data/cicd/maven settings-xml | MAVEN_SETTINGS_XML ;
     - name: Install GraalVM
       uses: graalvm/setup-graalvm@v1
       with:
@@ -32,6 +53,13 @@ jobs:
         distribution: 'graalvm'
         cache: 'maven'
         github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Write settings.xml
+      if: env.MAVEN_SETTINGS_XML != ''
+      run: |
+        mkdir -p ~/.m2
+        cat <<EOF > ~/.m2/settings.xml
+        ${MAVEN_SETTINGS_XML}
+        EOF
     - name: Unit Tests
       run: ./mvnw -V --no-transfer-progress clean test
     - name: Executable Jar
