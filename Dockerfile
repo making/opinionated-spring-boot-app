@@ -10,7 +10,7 @@ RUN --mount=type=cache,target=/root/.m2,sharing=locked \
     cp target/*.jar /opt/application.jar
 RUN --mount=type=bind,target=. \
     java -Djarmode=tools -jar /opt/application.jar extract --layers --launcher --destination /opt/extracted >/dev/null 2>&1 || \
-    java -Djarmode=layertools -jar /opt/application.jar extract --destination /opt/extracted >/dev/null && \
+    java -Djarmode=layertools -jar /opt/application.jar extract --destination /opt/extracted && \
     curl -sL -o /opt/entrypoint.sh https://github.com/making/dockerfile-utils/raw/refs/heads/main/entrypoint.sh && \
     curl -sL -o /opt/class_counter.sh https://github.com/making/dockerfile-utils/raw/refs/heads/main/class_counter.sh && \
     bash /opt/class_counter.sh /opt/extracted/application /opt/extracted/dependencies > /opt/class_count
